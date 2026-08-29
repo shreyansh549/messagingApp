@@ -8,10 +8,10 @@ import cors from "cors";
 
 import job from "./lib/cron.js";
 import clerkWebHook from "./webhooks/clerk.webhook.js";
+import authRoutes from "./routes/auth.route.js"
 const app = express();
 
 const PORT = process.env.PORT;
-
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const publicDir = path.join(process.cwd(), "public");
@@ -30,6 +30,9 @@ app.use(clerkMiddleware());
 app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
+
+
+app.use("/api/auth", authRoutes)
 
 // if the public directory exists, serve the static files
 // this is for production build
