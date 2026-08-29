@@ -5,8 +5,9 @@ import fs from "fs";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
-import { error } from "console";
+
 import job from "./lib/cron.js";
+import clerkWebHook from "./webhooks/clerk.webhook.js";
 const app = express();
 
 const PORT = process.env.PORT;
@@ -14,6 +15,13 @@ const PORT = process.env.PORT;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const publicDir = path.join(process.cwd(), "public");
+
+//its importent you dont parse the web hook event data, it should be in raw format
+app.use(
+  "/api/webhooks/clerk",
+  express.raw({ type: "application/json" }),
+  clerkWebHook,
+);
 
 app.use(express.json());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
