@@ -6,6 +6,7 @@ import path from "path";
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
 import { error } from "console";
+import job from "./lib/cron.js";
 const app = express();
 
 const PORT = process.env.PORT;
@@ -17,6 +18,10 @@ const publicDir = path.join(process.cwd(), "public");
 app.use(express.json());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(clerkMiddleware());
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ ok: true });
+});
 
 // if the public directory exists, serve the static files
 // this is for production build
@@ -30,4 +35,8 @@ if (fs.existsSync(publicDir)) {
 app.listen(PORT, () => {
   connectDB();
   console.log("server is running on port no 3000");
+
+  if (process.env.NODE_ENV === "production") {
+    job.start();
+  }
 });
