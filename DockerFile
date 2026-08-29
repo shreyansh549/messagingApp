@@ -1,4 +1,4 @@
-# Monolith: Vite frontend + Express API. Build from repo root.
+# Monolith: Vite frontend + Express API using docker. Build from repo root.
 
 # --- Stage 1: build the SPA (Vite) ---
 # Produces static HTML/JS/CSS under frontend/dist.
