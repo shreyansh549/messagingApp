@@ -10,7 +10,9 @@ import job from "./lib/cron.js";
 import clerkWebHook from "./webhooks/clerk.webhook.js";
 import authRoutes from "./routes/auth.route.js"
 import messageRoutes from "./routes/message.route.js"
-const app = express();
+import {app, server } from "./lib/socket.js";
+
+// const app = express(); since we are using socket on top express for real time 
 
 const PORT = process.env.PORT;
 const FRONTEND_URL = process.env.FRONTEND_URL;
@@ -45,7 +47,7 @@ if (fs.existsSync(publicDir)) {
   });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectDB();
   console.log("server is running on port no 3000");
 
