@@ -9,11 +9,12 @@ import { useAuth } from "@clerk/react";
 import { useEffect } from "react";
 
 import { Toaster } from "react-hot-toast";
+import PageLoader from "./components/PageLoader";
 
 function App() {
   const { isSignedIn, isLoaded } = useAuth();
 
-  if (!isLoaded) return <p>Loading...</p>;
+  if (!isLoaded) return <PageLoader/>;
 
   // option 1
   // const { checkAuth, isCheckingAuth, clearAuth } = useAuthStore();
