@@ -1,11 +1,11 @@
-# Monolith: Vite frontend + Express API using docker. Build from repo root.
+# Monolith: Vite frontend + Express API. Build from repo root.
 
 # --- Stage 1: build the SPA (Vite) ---
 # Produces static HTML/JS/CSS under frontend/dist.
 FROM node:22-bookworm-slim AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package.json frontend/package-lock.json ./
-RUN npm install --no-audit --no-fund --legacy-peer-deps
+RUN npm ci --no-audit --no-fund
 COPY frontend/ ./
 # Empty = browser calls /api on the same host as the page.
 ENV VITE_API_URL=
